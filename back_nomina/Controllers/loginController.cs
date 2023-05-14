@@ -13,9 +13,10 @@ namespace back_nomina.Controllers
         [HttpGet]
         [Route("/")]
 
+
         public dynamic login(string usuario, string password)
         {
-
+            
             var url = "http://apiservicios.ecuasolmovsa.com:3009/api/Usuarios?usuario=" + usuario + "&password=" + password;
             var request = (HttpWebRequest)WebRequest.Create(url);
             JsonSerializerOptions options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
@@ -58,7 +59,8 @@ namespace back_nomina.Controllers
                     {
                         ok = true,
                         codEmisor,
-                        listarEmisor,
+                        //resp,
+                        ///listarEmisor,
                         
                     };
                 }
@@ -67,7 +69,8 @@ namespace back_nomina.Controllers
                     return new
                     {
                         Ok = false,
-                        msg = "CREDENCIALES INVÁLIDAS"
+                        msg = "CREDENCIALES INVÁLIDAS",
+                        //obs
                     };
                 }
 
@@ -110,6 +113,17 @@ namespace back_nomina.Controllers
             }
             return null;
         }
+
+
+
+        //public dynamic validacion()
+        //{
+        //    return new
+        //    {
+        //        ok = true,
+        //        msg = "Entro a validacion"
+        //    };
+        //}
 
     }
 }

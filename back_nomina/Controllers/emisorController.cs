@@ -59,5 +59,61 @@ namespace back_nomina.Controllers
 
             }
         }
+
+        [HttpGet]
+        [Route("/emisor/all")]
+        public dynamic getEmisorAll()
+        {
+            var url = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/GetEmisor";
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            JsonSerializerOptions options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+
+            request.Method = "GET";
+            request.Accept = "application/text; charset: UTF-8";
+
+
+            try
+            {
+                List<respEmisor> resp = new List<respEmisor>();
+
+                WebResponse response = request.GetResponse();
+                Stream strReader = response.GetResponseStream();
+                StreamReader objReader = new StreamReader(strReader);
+                string responseBody = objReader.ReadToEnd();
+
+                resp = JsonConvert.DeserializeObject<List<respEmisor>>(responseBody);
+
+                var emisor = resp;
+                
+
+
+                return new
+                {
+                    ok = true,
+                    msg = "exito emisor",
+                    //test,
+                    emisor,
+
+
+                };
+
+            }
+            catch (Exception ex)
+            {
+                return new
+                {
+                    ok = false,
+                    msg = "Error no se pudo traer el emisor"
+                };
+
+            }
+
+
+            //return new
+            //{
+            //    ok = true,
+            //    msg = "get all emisor"
+            //};
+        }
     }
 }
