@@ -205,13 +205,52 @@ namespace back_nomina.Controllers
                 };
             }
 
-            return null;
 
-            //return new
-            //{
-            //    ok = true,
-            //    msg = "DELETE centro costos"
-            //};
+        }
+
+        [HttpGet]
+        [Route("/centroCostosSearch")]
+        public dynamic searchCentroCostos( string word )
+        {
+
+            var url = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/CentroCostosSearch?descripcioncentrocostos=" + word;
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            JsonSerializerOptions options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+
+            request.Method = "GET";
+            request.Accept = "application/text; charset: UTF-8";
+
+
+            try
+            {
+
+                List<respCentroCostos> resp = new List<respCentroCostos>();
+
+                WebResponse response = request.GetResponse();
+                Stream strReader = response.GetResponseStream();
+                StreamReader objReader = new StreamReader(strReader);
+                string responseBody = objReader.ReadToEnd();
+
+                resp = JsonConvert.DeserializeObject<List<respCentroCostos>>(responseBody);
+
+                return new
+                {
+                    ok = true,
+                    costoss = resp
+                };
+
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.ToString());
+                return new
+                {
+                    ok = false,
+                    msg = "Error ==> " + ex.ToString()
+                };
+
+            }
+
 
         }
 

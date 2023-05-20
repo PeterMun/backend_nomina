@@ -115,5 +115,9 @@ namespace back_nomina.Controllers
             //    msg = "get all emisor"
             //};
         }
-    }
+
+
+
+
+        }
 }
